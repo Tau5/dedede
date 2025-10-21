@@ -6,7 +6,6 @@ import java.util.List;
 public class CSVManager {
     File file;
     BufferedReader input;
-    BufferedWriter output;
 
     public CSVManager(File file) throws IOException {
         input = new BufferedReader(new FileReader(file));
@@ -20,7 +19,7 @@ public class CSVManager {
     }
 
     public void insertRow(CSVRow csvRow) throws IOException {
-        output = new BufferedWriter(new FileWriter(file));
+        var output = new BufferedWriter(new FileWriter(file, true));
         output.write(csvRow.toLine());
         output.newLine();
     }
