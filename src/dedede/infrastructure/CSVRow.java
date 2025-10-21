@@ -16,6 +16,10 @@ public class CSVRow {
         this.fields = new ArrayList<>(fields);
     }
 
+    private CSVRow(int size) {
+        this.fields = new ArrayList<String>(size);
+    }
+
     String toLine() {
        StringBuffer b = new StringBuffer();
        for (int i = 0; i < fields.size(); i++) {
@@ -51,12 +55,38 @@ public class CSVRow {
     }
 
     public Optional<Instant> getInstant(int fieldIndex) {
-        try {
-            // If getLong returns Empty, return Empty
-            // else, treat long as epoch seconds and convert to Option<Instant> containing instant
-            return getLong(fieldIndex).map(Instant::ofEpochSecond);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return Optional.empty();
+        // If getLong returns Empty, return Empty
+        // else, treat long as epoch seconds and convert to Option<Instant> containing instant
+        return getLong(fieldIndex).map(Instant::ofEpochSecond);
+    }
+
+    public Optional<Boolean> getBoolean(int fieldIndex) {
+        return getLong(fieldIndex).map(l -> {
+            if (l == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+    }
+
+    public void setLong(int fieldIndex, long value) throws ArrayIndexOutOfBoundsException {
+        fields.set(fieldIndex, Long.toString(value));
+    }
+
+    public void setString(int fieldIndex, String value) throws ArrayIndexOutOfBoundsException {
+        fields.set(fieldIndex, value);
+    }
+
+    public void setInstant(int fieldIndex, Instant value) throws ArrayIndexOutOfBoundsException {
+        setLong(fieldIndex, value.getEpochSecond());
+    }
+
+    public void setBoolean(int fieldIndex, Boolean value) throws ArrayIndexOutOfBoundsException {
+        if (value) {
+            setLong(fieldIndex, 0);
+        } else {
+            setLong(fieldIndex, 1);
         }
     }
 }
