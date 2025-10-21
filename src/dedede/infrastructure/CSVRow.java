@@ -16,7 +16,7 @@ public class  CSVRow {
         this.fields = new ArrayList<>(fields);
     }
 
-    private CSVRow(int size) {
+    public CSVRow(int size) {
         this.fields = new ArrayList<String>(size);
     }
 
