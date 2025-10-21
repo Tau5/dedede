@@ -22,10 +22,30 @@ public class CSVManager {
     }
 
     public void insertRow(CSVRow csvRow) throws IOException {
-        var output = new BufferedWriter(new FileWriter(file, true));
-        output.write(csvRow.toLine());
-        output.newLine();
-        output.flush();
-        output.close();
+        try(var output = new BufferedWriter(new FileWriter(file, true))) {
+            output.write(csvRow.toLine());
+            output.newLine();
+            output.flush();
+        }
+    }
+
+    public void updateRow(String ID, int column, CSVRow csvRow) throws IOException {
+        try(BufferedWriter output = new BufferedWriter(new FileWriter(file))) {
+            var lines = input.lines();
+            lines.map(CSVRow::FromLine).toList().forEach(line -> {
+                if (line.fields.get(column).equals(ID)) {
+                    try {
+                        output.write(csvRow.toLine());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                try {
+                    output.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
     }
 }
