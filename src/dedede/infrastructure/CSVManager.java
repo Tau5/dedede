@@ -3,12 +3,14 @@ package dedede.infrastructure;
 import java.io.*;
 import java.util.List;
 
-public class CSVReader {
+public class CSVManager {
     File file;
     BufferedReader input;
+    BufferedWriter output;
 
-    public CSVReader(File file) throws FileNotFoundException {
+    public CSVManager(File file) throws IOException {
         input = new BufferedReader(new FileReader(file));
+        output = new BufferedWriter(new FileWriter(file));
         this.file = file;
     }
 
@@ -18,4 +20,8 @@ public class CSVReader {
         return lines.map(CSVRow::FromLine).toList();
     }
 
+    public void insertRow(CSVRow csvRow) throws IOException {
+        output.write(csvRow.toLine());
+        output.newLine();
+    }
 }
