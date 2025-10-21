@@ -16,6 +16,7 @@ public class CSVManager {
 
     public List<CSVRow> listAll() throws IOException {
         var lines = input.lines();
+        // Convert every line of the csv file to CSVRow with CSVRow.FromLine
         return lines.map(CSVRow::FromLine).toList();
     }
 
