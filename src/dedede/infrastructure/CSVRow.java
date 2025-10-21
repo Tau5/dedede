@@ -55,4 +55,14 @@ public class CSVRow {
         // else, treat long as epoch seconds and convert to Option<Instant> containing instant
         return getLong(fieldIndex).map(Instant::ofEpochSecond);
     }
+
+    public Optional<Boolean> getBoolean(int fieldIndex) {
+        return getLong(fieldIndex).map(l -> {
+            if (l == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+    }
 }
