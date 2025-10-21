@@ -12,8 +12,8 @@ public class Book {
     private Instant borrowEnd;
 
 
-    public Book(String titel, Long ID, String author, boolean borrowed, Instant borrowStart, Instant borrowEnd, long userID) {
-        this.titel = titel;
+    public Book(Long ID, String title, String author, boolean borrowed, long userID, Instant borrowStart, Instant borrowEnd) {
+        this.titel = title;
         this.ID = ID;
         this.author = author;
         this.borrowed = borrowed;
