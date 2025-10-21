@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CSVRow {
-    ArrayList<String> fields;
+public class  CSVRow {
+    protected  ArrayList<String> fields;
 
     static CSVRow FromLine(String line) {
         return new CSVRow(List.of(line.split(",")));
