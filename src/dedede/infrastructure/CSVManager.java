@@ -12,11 +12,13 @@ public class CSVManager {
         this.file = file;
     }
 
-    // NOTE: First line is header and should be ignored
     public List<CSVRow> listAll() {
         var lines = input.lines();
         // Convert every line of the csv file to CSVRow with CSVRow.FromLine
-        return lines.map(CSVRow::FromLine).toList();
+        return lines
+                .skip(1) // Skip header of csv
+                .map(CSVRow::FromLine)
+                .toList();
     }
 
     public void insertRow(CSVRow csvRow) throws IOException {
