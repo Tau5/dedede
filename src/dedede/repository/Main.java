@@ -1,14 +1,14 @@
 package dedede.repository;
 
-import dedede.infrastructure.CSVReader;
+import dedede.infrastructure.CSVManager;
 
 import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        CSVReader reader = null;
+        CSVManager reader = null;
         try {
-            reader = new CSVReader(new File("example.csv"));
+            reader = new CSVManager(new File("example.csv"));
 
             var rows = reader.listAll();
 
