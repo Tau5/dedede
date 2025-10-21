@@ -12,7 +12,8 @@ public class CSVManager {
         this.file = file;
     }
 
-    public List<CSVRow> listAll() throws IOException {
+    // NOTE: First line is header and should be ignored
+    public List<CSVRow> listAll() {
         var lines = input.lines();
         // Convert every line of the csv file to CSVRow with CSVRow.FromLine
         return lines.map(CSVRow::FromLine).toList();
@@ -22,5 +23,7 @@ public class CSVManager {
         var output = new BufferedWriter(new FileWriter(file, true));
         output.write(csvRow.toLine());
         output.newLine();
+        output.flush();
+        output.close();
     }
 }
