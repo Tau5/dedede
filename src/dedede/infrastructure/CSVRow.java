@@ -51,12 +51,8 @@ public class CSVRow {
     }
 
     public Optional<Instant> getInstant(int fieldIndex) {
-        try {
-            // If getLong returns Empty, return Empty
-            // else, treat long as epoch seconds and convert to Option<Instant> containing instant
-            return getLong(fieldIndex).map(Instant::ofEpochSecond);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return Optional.empty();
-        }
+        // If getLong returns Empty, return Empty
+        // else, treat long as epoch seconds and convert to Option<Instant> containing instant
+        return getLong(fieldIndex).map(Instant::ofEpochSecond);
     }
 }
