@@ -13,8 +13,8 @@ public class UserRepository implements IRepositorio<User, Long> {
     }
 
     @Override
-    public void deleteById(Long aLong) {
-        table.deleteRow(l);
+    public void deleteById(Long id) {
+        table.deleteRow(id.toString(), 0);
     }
 
     @Override
