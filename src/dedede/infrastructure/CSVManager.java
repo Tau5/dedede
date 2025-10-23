@@ -38,11 +38,9 @@ public class CSVManager {
     /**
      * Metodo para escribir de memoria a archivo
      *
-     * @param csvRow
-     *
      * @throws IOException
      */
-    public void saveFile(CSVRow csvRow) throws IOException {
+    public void saveFile() throws IOException {
         try(var output = new BufferedWriter(new FileWriter(file, true))) {
             output.write(header.toLine());
             output.newLine();
@@ -66,12 +64,13 @@ public class CSVManager {
      *
      * @throws IOException
      */
-    public void updateRow(String ID, CSVRow csvRow) throws IOException {
-        rows.forEach(row -> {
-            if (row.equals(ID)) {
-                row = csvRow;
-            }
-        });
+    public void updateRow(String ID, int column, CSVRow csvRow) throws IOException {
+        for (int i = 0; i < rows.size(); i++) {
+           var row = rows.get(i);
+           if (row.fields.get(column).equals(ID)) {
+              rows.set(i, csvRow);
+           }
+        }
     }
 
     /**
