@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BookRepository implements IRepositorioExtend<Book, Long> {
-    CSVManager table;
+    private CSVManager table;
 
     public BookRepository(File file) throws IOException {
        table = new CSVManager(file);
@@ -41,7 +41,7 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
 
     @Override
     public void deleteAll() {
-
+        table.emptyTable();
     }
 
     @Override
