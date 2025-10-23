@@ -18,9 +18,11 @@ public class CSVManager {
     public CSVManager(File file) throws IOException {
         this.file = file;
         try (var reader = new BufferedReader(new FileReader(file))) {
-            var lines = reader.lines();
-            this.header = CSVRow.FromLine(lines.findFirst().get());
-            this.rows = new ArrayList<>(lines.map(CSVRow::FromLine).toList());
+            var lines = reader
+                    .lines()
+                    .map(CSVRow::FromLine);
+            this.rows = new ArrayList<>(lines.toList());
+            this.header = this.rows.removeFirst();
         }
     }
 
