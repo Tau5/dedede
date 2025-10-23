@@ -41,7 +41,7 @@ public class CSVManager {
      * @throws IOException
      */
     public void saveFile() throws IOException {
-        try(var output = new BufferedWriter(new FileWriter(file, true))) {
+        try(var output = new BufferedWriter(new FileWriter(file))) {
             output.write(header.toLine());
             output.newLine();
             rows.forEach(row -> {
