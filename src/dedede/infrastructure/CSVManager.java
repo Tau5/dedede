@@ -87,9 +87,9 @@ public class CSVManager {
      *
      * @param ID Identificador de la fila
      */
-    public void deleteRow(String ID) {
+    public void deleteRow(String ID, int column) {
         rows.forEach(row -> {
-            if (row.equals(ID)) {
+            if (row.fields.get(column).equals(ID)) {
                 rows.remove(row);
             }
         });
