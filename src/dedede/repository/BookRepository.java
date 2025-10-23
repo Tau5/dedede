@@ -7,8 +7,10 @@ import dedede.infrastructure.CSVRow;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
-public class BookRepository implements IRepositorio<Book, Long> {
+public class BookRepository implements IRepositorioExtend<Book, Long> {
     CSVManager table;
 
     public BookRepository(File file) throws IOException {
@@ -65,7 +67,27 @@ public class BookRepository implements IRepositorio<Book, Long> {
     }
 
     @Override
+    public Optional<Book> findByIdOptional(Long id) {
+        var rows = table.listAll().stream().filter(t ->
+                t.getLong(0).stream().anyMatch(rowId -> rowId.equals(id))
+        );
+
+        var maybeRow = rows.findAny();
+
+        return maybeRow.map(this::bookFromRow);
+    }
+
+    @Override
     public Iterable<Book> findAll() {
+        // Maps every CSVRow of the table to Book
+        return table
+                .listAll()
+                .stream().map(this::bookFromRow)
+                .toList();
+    }
+
+    @Override
+    public List<Book> findAllList() {
         // Maps every CSVRow of the table to Book
         return table
                 .listAll()
@@ -76,7 +98,7 @@ public class BookRepository implements IRepositorio<Book, Long> {
     private CSVRow bookToRow(Book book) {
         CSVRow row = new CSVRow(7);
         row.setLong(0, book.getID());
-        row.setString(1, book.getTitel());
+        row.setString(1, book.getTitle());
         row.setString(2, book.getAuthor());
         row.setBoolean(3, book.isBorrowed());
         row.setLong(4, book.getUserID());
@@ -93,8 +115,10 @@ public class BookRepository implements IRepositorio<Book, Long> {
             if (existsById(entity.getID())) {
                 table.updateRow(row.getString(0).get(), 0, row);
             } else {
-                table.saveFile(row);
+                table.insertRow(row);
             }
+
+            table.saveFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

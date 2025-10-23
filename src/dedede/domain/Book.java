@@ -4,7 +4,7 @@ import java.time.Instant;
 
 public class Book {
     private Long ID;
-    private String titel;
+    private String title;
     private String author;
     private boolean borrowed;
     private long userID;
@@ -13,7 +13,7 @@ public class Book {
 
 
     public Book(Long ID, String title, String author, boolean borrowed, long userID, Instant borrowStart, Instant borrowEnd) {
-        this.titel = title;
+        this.title = title;
         this.ID = ID;
         this.author = author;
         this.borrowed = borrowed;
@@ -30,12 +30,12 @@ public class Book {
         this.ID = ID;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthor() {
