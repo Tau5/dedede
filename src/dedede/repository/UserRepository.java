@@ -9,7 +9,7 @@ public class UserRepository implements IRepositorio<User, Long> {
 
     @Override
     public long count() {
-        return (long) table.listAll().size() - 1;
+        return (long) table.listAll().size();
     }
 
     @Override
