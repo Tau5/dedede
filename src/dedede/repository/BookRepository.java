@@ -93,7 +93,7 @@ public class BookRepository implements IRepositorio<Book, Long> {
             if (existsById(entity.getID())) {
                 table.updateRow(row.getString(0).get(), 0, row);
             } else {
-                table.insertRow(row);
+                table.saveFile(row);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

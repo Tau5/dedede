@@ -19,56 +19,34 @@ public class CSVManager {
     }
 
     public List<CSVRow> listAll() {
-        try {
-            input.close();
-            input = new BufferedReader(new FileReader(file));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        var lines = input.lines();
-        // Convert every line of the csv file to CSVRow with CSVRow.FromLine
-        return
+        return this.rows;
     }
 
-    public void insertRow(CSVRow csvRow) throws IOException {
+    public void saveFile(CSVRow csvRow) throws IOException {
         try(var output = new BufferedWriter(new FileWriter(file, true))) {
-            output.write(csvRow.toLine());
+            output.write(header.toLine());
             output.newLine();
+            rows.forEach(row -> {
+                try {
+                    output.write(row.toLine());
+                    output.newLine();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             output.flush();
         }
     }
 
     public void updateRow(String ID, int column, CSVRow csvRow) throws IOException {
-        input.close();
-        input = new BufferedReader(new FileReader(file));
-        var lines = input.lines().toList();
-        input.close();
-        try(BufferedWriter output = new BufferedWriter(new FileWriter(file))) {
-            lines.stream().map(CSVRow::FromLine).forEach(line -> {
-                System.out.println(line.toLine());
-                if (line.fields.get(column).equals(ID)) {
-                    try {
-                        output.write(csvRow.toLine());
-                        output.newLine();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    try {
-                        output.write(line.toLine());
-                        output.newLine();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-
-            });
-            try {
-                output.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        rows.forEach((row) -> {
+            if (row.equals(ID)) {
+                row = csvRow;
             }
-        }
-        input.close();
+        });
+    }
+
+    public void insertRow(CSVRow csvRow) {
+        rows.add(csvRow);
     }
 }
