@@ -12,9 +12,11 @@ public class CSVManager {
     public CSVManager(File file) throws IOException {
         this.file = file;
         try (var reader = new BufferedReader(new FileReader(file))) {
-            var lines = reader.lines();
-            this.header = CSVRow.FromLine(lines.findFirst().get());
-            this.rows = new ArrayList<>(lines.map(CSVRow::FromLine).toList());
+            var lines = reader
+                    .lines()
+                    .map(CSVRow::FromLine);
+            this.rows = new ArrayList<>(lines.toList());
+            this.header = this.rows.removeFirst();
         }
     }
 
@@ -22,8 +24,8 @@ public class CSVManager {
         return this.rows;
     }
 
-    public void saveFile(CSVRow csvRow) throws IOException {
-        try(var output = new BufferedWriter(new FileWriter(file, true))) {
+    public void saveFile() throws IOException {
+        try(var output = new BufferedWriter(new FileWriter(file))) {
             output.write(header.toLine());
             output.newLine();
             rows.forEach(row -> {
@@ -39,11 +41,12 @@ public class CSVManager {
     }
 
     public void updateRow(String ID, int column, CSVRow csvRow) throws IOException {
-        rows.forEach((row) -> {
-            if (row.equals(ID)) {
-                row = csvRow;
-            }
-        });
+        for (int i = 0; i < rows.size(); i++) {
+           var row = rows.get(i);
+           if (row.fields.get(column).equals(ID)) {
+              rows.set(i, csvRow);
+           }
+        }
     }
 
     public void insertRow(CSVRow csvRow) {
