@@ -18,6 +18,7 @@ public class  CSVRow {
 
     public CSVRow(int size) {
         this.fields = new ArrayList<String>(size);
+        for (int i = 0; i < size; i++) this.fields.add("");
     }
 
     String toLine() {
