@@ -9,6 +9,12 @@ public class CSVManager {
     ArrayList<CSVRow> rows;
     CSVRow header;
 
+    /**
+     * Constructor para modificar en memoria los archivos sin manejar el archivo en tiempo real
+     * @param file
+     *
+     * @throws IOException
+     */
     public CSVManager(File file) throws IOException {
         this.file = file;
         try (var reader = new BufferedReader(new FileReader(file))) {
@@ -18,10 +24,22 @@ public class CSVManager {
         }
     }
 
+    /**
+     * Metodo para devolver la lista de las filas del archivo
+     *
+     * @return this.rows
+     */
     public List<CSVRow> listAll() {
         return this.rows;
     }
 
+    /**
+     * Metodo para escribir de memoria a archivo
+     *
+     * @param csvRow
+     *
+     * @throws IOException
+     */
     public void saveFile(CSVRow csvRow) throws IOException {
         try(var output = new BufferedWriter(new FileWriter(file, true))) {
             output.write(header.toLine());
@@ -38,7 +56,15 @@ public class CSVManager {
         }
     }
 
-    public void updateRow(String ID, int column, CSVRow csvRow) throws IOException {
+    /**
+     * Metodo para modificar una fila, buscando a trabas de ID
+     *
+     * @param ID Identificador
+     * @param csvRow Datos nuevos de la fila a modificar
+     *
+     * @throws IOException
+     */
+    public void updateRow(String ID, CSVRow csvRow) throws IOException {
         rows.forEach(row -> {
             if (row.equals(ID)) {
                 row = csvRow;
@@ -46,10 +72,20 @@ public class CSVManager {
         });
     }
 
+    /**
+     * Metodo para insertar una nueva fila
+     *
+     * @param csvRow Nueva fila a insertar en la lista
+     */
     public void insertRow(CSVRow csvRow) {
         rows.add(csvRow);
     }
 
+    /**
+     * Metodo para eliminar una fila, buscandola por Id
+     *
+     * @param ID Identificador de la fila
+     */
     public void deleteRow(String ID) {
         rows.forEach(row -> {
             if (row.equals(ID)) {
