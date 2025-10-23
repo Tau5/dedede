@@ -90,4 +90,12 @@ public class CSVManager {
     public void deleteRow(String ID, int column) {
         rows.removeIf(r -> r.fields.get(column).equals(ID));
     }
+
+    /**
+     * Metodo para eliminar toda la tabla
+     * */
+    public void emptyTable() {
+        rows.clear();
+    }
+
 }
