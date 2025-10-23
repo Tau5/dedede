@@ -39,7 +39,7 @@ public class CSVManager {
     }
 
     public void updateRow(String ID, int column, CSVRow csvRow) throws IOException {
-        rows.forEach((row) -> {
+        rows.forEach(row -> {
             if (row.equals(ID)) {
                 row = csvRow;
             }
@@ -48,5 +48,13 @@ public class CSVManager {
 
     public void insertRow(CSVRow csvRow) {
         rows.add(csvRow);
+    }
+
+    public void deleteRow(String ID) {
+        rows.forEach(row -> {
+            if (row.equals(ID)) {
+                rows.remove(row);
+            }
+        });
     }
 }
