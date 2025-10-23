@@ -94,4 +94,12 @@ public class CSVManager {
             }
         });
     }
+
+    /**
+     * Metodo para eliminar toda la tabla
+     * */
+    public void emptyTable() {
+        rows.clear();
+    }
+
 }
