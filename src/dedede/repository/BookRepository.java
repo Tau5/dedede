@@ -36,7 +36,12 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
 
     @Override
     public void deleteById(Long id) {
-
+        table.deleteRow(id.toString(), 0);
+        try {
+            table.saveFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

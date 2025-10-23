@@ -41,7 +41,7 @@ public class CSVManager {
      * @throws IOException
      */
     public void saveFile() throws IOException {
-        try(var output = new BufferedWriter(new FileWriter(file, true))) {
+        try(var output = new BufferedWriter(new FileWriter(file))) {
             output.write(header.toLine());
             output.newLine();
             rows.forEach(row -> {
@@ -88,11 +88,7 @@ public class CSVManager {
      * @param ID Identificador de la fila
      */
     public void deleteRow(String ID, int column) {
-        rows.forEach(row -> {
-            if (row.fields.get(column).equals(ID)) {
-                rows.remove(row);
-            }
-        });
+        rows.removeIf(r -> r.fields.get(column).equals(ID));
     }
 
     /**
