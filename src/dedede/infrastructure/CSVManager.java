@@ -29,7 +29,7 @@ public class CSVManager {
     /**
      * Metodo para devolver la lista de las filas del archivo
      *
-     * @return this.rows
+     * @return Rows Lista de las filas del archivo
      */
     public List<CSVRow> listAll() {
         return this.rows;
@@ -61,6 +61,7 @@ public class CSVManager {
      *
      * @param ID Identificador
      * @param csvRow Datos nuevos de la fila a modificar
+     * @param column Columna a identificar
      *
      * @throws IOException
      */
@@ -86,10 +87,11 @@ public class CSVManager {
      * Metodo para eliminar una fila, buscandola por Id
      *
      * @param ID Identificador de la fila
+     * @param column Columna a identificar
      */
-    public void deleteRow(String ID) {
+    public void deleteRow(String ID, int column) {
         rows.forEach(row -> {
-            if (row.equals(ID)) {
+            if (row.fields.get(column).equals(ID)) {
                 rows.remove(row);
             }
         });
