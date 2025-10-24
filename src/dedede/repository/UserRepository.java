@@ -1,6 +1,5 @@
 package dedede.repository;
 
-import dedede.domain.Book;
 import dedede.domain.User;
 import dedede.infrastructure.CSVManager;
 import dedede.infrastructure.CSVRow;
