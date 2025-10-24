@@ -46,4 +46,14 @@ public class MenuHelper {
         return options.get(chosen).supplier.get();
     }
 
+    public static int getNumber(String prompt) {
+        int value = 0;
+        if (sc.hasNextInt()) {
+            value = sc.nextInt();
+            sc.reset();
+        }
+
+        return value;
+    }
+
 }
