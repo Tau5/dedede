@@ -31,7 +31,7 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
 
     @Override
     public long count() {
-        return (long) table.listAll().size();
+        return table.listAll().size();
     }
 
     @Override
