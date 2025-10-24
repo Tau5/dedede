@@ -1,6 +1,7 @@
 package dedede.infrastructure;
 
 import java.io.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +97,26 @@ public class CSVManager {
      * */
     public void emptyTable() {
         rows.clear();
+    }
+
+    static public String convertToRaw(Instant value) {
+        return Long.toString(value.getEpochSecond());
+    }
+
+    static public String convertToRaw(long value) {
+        return Long.toString(value);
+    }
+
+    static public String convertToRaw(boolean value) {
+        if (value) {
+            return "1";
+        } else {
+            return "2";
+        }
+    }
+
+    static public String convertToRaw(String value) {
+        return value;
     }
 
 }
