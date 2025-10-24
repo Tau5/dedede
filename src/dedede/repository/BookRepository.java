@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BookRepository implements IRepositorioExtend<Book, Long> {
-    private CSVManager table;
+    private final CSVManager table;
 
     public BookRepository(File file) throws IOException {
        table = new CSVManager(file);
