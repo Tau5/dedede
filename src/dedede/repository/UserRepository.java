@@ -1,11 +1,33 @@
 package dedede.repository;
 
+import dedede.domain.Book;
 import dedede.domain.User;
 import dedede.infrastructure.CSVManager;
+import dedede.infrastructure.CSVRow;
 
-public class UserRepository implements IRepositorio<User, Long> {
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
+public class UserRepository implements IRepositorioExtend<User, Long> {
 
     private CSVManager table;
+
+    private User userFromRow(CSVRow row) {
+        return new User(
+                row.getLong(0).orElse(0L),
+                row.getString(1).orElse(""),
+                row.getString(2).orElse("")
+        );
+    }
+
+    private CSVRow userToRow(User user) {
+        CSVRow row = new CSVRow(3);
+        row.setLong(0, user.getID());
+        row.setString(1, user.getName());
+        row.setString(2, user.getSurname());
+        return row;
+    }
 
     @Override
     public long count() {
@@ -23,23 +45,52 @@ public class UserRepository implements IRepositorio<User, Long> {
     }
 
     @Override
-    public boolean existsById(Long aLong) {
-        return false;
+    public boolean existsById(Long ID) {
+        boolean exist = false;
+        var rows = table.listAll();
+
+       exist = rows.stream().filter(f -> f.getLong(0).equals(ID)).findFirst().isPresent();
+
+       return exist;
     }
 
     @Override
-    public User findById(Long aLong) {
-        return null;
+    public User findById(Long id) {
+        var rows = table.listAll();
+        var maybeUser = rows.stream().filter(f -> f.getLong(0).equals(id)).findFirst();
+        var user = maybeUser.map(this::userFromRow).get();
+        return user;
     }
 
     @Override
-    public Iterable findAll() {
-        return null;
+    public Iterable<User> findAll() {
+        return table.listAll().stream().map(this::userFromRow).toList();
     }
 
     @Override
     public <S extends User> S save(S entity) {
-        return null;
+
+        CSVRow row = userToRow(entity);
+
+        try {
+            if(existsById(entity.getID())) {
+                table.updateRow(CSVManager.convertToRaw(entity.getID()), 0, row);
+            } else {
+                table.insertRow(row);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return entity;
     }
 
+    @Override
+    public Optional<User> findByIdOptional(Long aLong) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<User> findAllList() {
+        return List.of();
+    }
 }
