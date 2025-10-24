@@ -6,8 +6,8 @@ public class Book {
     private Long ID;
     private String title;
     private String author;
-    private boolean borrowed;
-    private long userID;
+    private Boolean borrowed;
+    private Long userID;
     private Instant borrowStart;
     private Instant borrowEnd;
 
@@ -50,7 +50,7 @@ public class Book {
         return userID;
     }
 
-    public void setUserID(long userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 
@@ -58,7 +58,7 @@ public class Book {
         return borrowed;
     }
 
-    public void setBorrowed(boolean borrowed) {
+    public void setBorrowed(Boolean borrowed) {
         this.borrowed = borrowed;
     }
 
