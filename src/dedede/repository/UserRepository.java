@@ -5,6 +5,7 @@ import dedede.domain.User;
 import dedede.infrastructure.CSVManager;
 import dedede.infrastructure.CSVRow;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,10 @@ import java.util.Optional;
 public class UserRepository implements IRepositorioExtend<User, Long> {
 
     private CSVManager table;
+
+    public UserRepository(File file) throws IOException {
+        this.table = new CSVManager(file);
+    }
 
     private User userFromRow(CSVRow row) {
         return new User(
