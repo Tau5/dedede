@@ -12,8 +12,8 @@ public class CSVManager {
 
     /**
      * Constructor para modificar en memoria los archivos sin manejar el archivo en tiempo real
-     * @param file
      *
+     * @param file
      * @throws IOException
      */
     public CSVManager(File file) throws IOException {
@@ -42,7 +42,7 @@ public class CSVManager {
      * @throws IOException
      */
     public void saveFile() throws IOException {
-        try(var output = new BufferedWriter(new FileWriter(file))) {
+        try (var output = new BufferedWriter(new FileWriter(file))) {
             output.write(header.toLine());
             output.newLine();
             rows.forEach(row -> {
@@ -60,17 +60,16 @@ public class CSVManager {
     /**
      * Metodo para modificar una fila, buscando a trabas de ID
      *
-     * @param ID Identificador
+     * @param ID     Identificador
      * @param csvRow Datos nuevos de la fila a modificar
-     *
      * @throws IOException
      */
     public void updateRow(String ID, int column, CSVRow csvRow) throws IOException {
         for (int i = 0; i < rows.size(); i++) {
-           var row = rows.get(i);
-           if (row.fields.get(column).equals(ID)) {
-              rows.set(i, csvRow);
-           }
+            var row = rows.get(i);
+            if (row.fields.get(column).equals(ID)) {
+                rows.set(i, csvRow);
+            }
         }
     }
 
@@ -94,7 +93,8 @@ public class CSVManager {
 
     /**
      * Metodo para eliminar toda la tabla
-     * */
+     *
+     */
     public void emptyTable() {
         rows.clear();
     }
