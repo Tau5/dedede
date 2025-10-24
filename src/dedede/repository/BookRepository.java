@@ -118,7 +118,7 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
         CSVRow row = bookToRow(entity);
         try {
             if (existsById(entity.getID())) {
-                table.updateRow(row.getString(0).get(), 0, row);
+                table.updateRow(CSVManager.convertToRaw(entity.getID()), 0, row);
             } else {
                 table.insertRow(row);
             }
