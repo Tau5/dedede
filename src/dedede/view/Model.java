@@ -12,6 +12,6 @@ final public class Model {
 
     Model(File booksFile, File usersFile) throws IOException {
         this.books = new BookRepository(booksFile);
-        this.users = new UserRepository();
+        this.users = new UserRepository(usersFile);
     }
 }
