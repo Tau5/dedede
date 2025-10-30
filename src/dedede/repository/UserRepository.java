@@ -84,13 +84,13 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
             newId = findAllList().getLast().getID() + 1;
         }
 
-        entity.setID(newId);
-
-        CSVRow row = userToRow(entity);
         try {
             if(existsById(entity.getID())) {
+                CSVRow row = userToRow(entity);
                 table.updateRow(CSVManager.convertToRaw(entity.getID()), 0, row);
             } else {
+                entity.setID(newId);
+                CSVRow row = userToRow(entity);
                 table.insertRow(row);
             }
 

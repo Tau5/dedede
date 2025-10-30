@@ -123,13 +123,13 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
             newId = findAllList().getLast().getID() + 1;
         }
 
-        entity.setID(newId);
-
-        CSVRow row = bookToRow(entity);
         try {
             if (existsById(entity.getID())) {
+                CSVRow row = bookToRow(entity);
                 table.updateRow(CSVManager.convertToRaw(entity.getID()), 0, row);
             } else {
+                entity.setID(newId);
+                CSVRow row = bookToRow(entity);
                 table.insertRow(row);
             }
 
