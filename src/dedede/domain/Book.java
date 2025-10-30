@@ -85,4 +85,17 @@ public class Book {
     public void setBorrowStart(Instant borrowStart) {
         this.borrowStart = borrowStart;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "ID=" + ID +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", borrowed=" + borrowed +
+                ", userID=" + userID +
+                ", borrowStart=" + borrowStart +
+                ", borrowEnd=" + borrowEnd +
+                '}';
+    }
 }
