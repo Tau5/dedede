@@ -2,13 +2,9 @@ package dedede.view;
 
 import dedede.domain.User;
 
-public class ViewIniciarSesion extends View {
-    public ViewIniciarSesion(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class ViewIniciarSesion implements View {
     @Override
-    void run() {
+    public void run(Model model, ViewManager viewManager) {
         model.users.findAllList().forEach(user -> {
             System.out.println(
                     user.getID() + ": " + user.getName() + " " + user.getSurname()
@@ -24,8 +20,8 @@ public class ViewIniciarSesion extends View {
 
         System.out.println(usuario.getName());
 
-        this.viewManager.switchView(
-            new HomeUsuario(model, viewManager, usuario)
+        viewManager.switchView(
+            new HomeUsuario(usuario)
         );
     }
 }

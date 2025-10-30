@@ -14,10 +14,7 @@ public class App {
             throw new RuntimeException(e);
         }
 
-        ViewManager viewManager = new ViewManager();
-        viewManager.switchView(
-                new ViewModo(model, viewManager)
-        );
-
+        ViewManager viewManager = new ViewManager(model);
+        viewManager.switchView(new ViewModo());
     }
 }

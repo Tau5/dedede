@@ -1,16 +1,12 @@
 package dedede.view;
 
-public class ViewUsuario extends View {
-    public ViewUsuario(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class ViewUsuario implements View {
     @Override
-    void run() {
+    public void run(Model model, ViewManager viewManager) {
         MenuHelper menu = new MenuHelper();
 
-        menu.registerOption(1, "Iniciar sesión", () -> new ViewIniciarSesion(model, viewManager));
-        menu.registerOption(2, "Registrarse", () -> new ViewRegistrarse(model, viewManager));
+        menu.registerOption(1, "Iniciar sesión", () -> new ViewIniciarSesion());
+        menu.registerOption(2, "Registrarse", () -> new ViewRegistrarse());
 
         View view = menu.chooseAndExecute("opción: ");
 

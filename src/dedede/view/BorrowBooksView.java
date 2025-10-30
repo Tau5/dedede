@@ -2,17 +2,14 @@ package dedede.view;
 
 import dedede.domain.User;
 
-public class BorrowBooksView extends View{
-
+public class BorrowBooksView implements View{
     private User user;
-
-    public BorrowBooksView(Model model, ViewManager viewManager, User user) {
-        super(model, viewManager);
+    public BorrowBooksView(User user) {
         this.user = user;
     }
 
     @Override
-    void run() {
+    public void run(Model model, ViewManager viewManager) {
         var books = model.books;
         var id = MenuHelper.getNumber("Ingrese el id del libro que quiere prestar");
         books.findAllList().forEach((book) -> {
@@ -27,6 +24,6 @@ public class BorrowBooksView extends View{
             }
         });
 
-        viewManager.switchView(new HomeUsuario(model, viewManager, user));
+        viewManager.switchView(new HomeUsuario(user));
     }
 }

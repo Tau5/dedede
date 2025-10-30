@@ -1,16 +1,12 @@
 package dedede.view;
 
-public class ViewModo extends View {
-    public ViewModo(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class ViewModo implements View {
     @Override
-    void run() {
+    public void run(Model model, ViewManager viewManager) {
         MenuHelper menu = new MenuHelper();
 
-        menu.registerOption(1, "Usuario", () -> new ViewUsuario(this.model, this.viewManager));
-        menu.registerOption(2, "Bibliotecario", () -> new ViewBibliotecario(this.model, this.viewManager));
+        menu.registerOption(1, "Usuario", () -> new ViewUsuario());
+        menu.registerOption(2, "Bibliotecario", () -> new ViewBibliotecario());
 
         View nextView = menu.chooseAndExecute("opcion: ");
 

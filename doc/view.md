@@ -2,9 +2,16 @@ The user interface in Dedede is separated into views.
 
 ### What is a View
 
+A view represents an interface for the user which shows data from the model.
+
 Only a view can be loaded at each time and it should have
-any data necessary to render itself, additionally it has the
-following attributes:
+any data necessary to render itself.
+
+Each view must implement a single method: `void run(Model, ViewManager)`,
+this is executed at the start of the view by the ViewManager
+
+Those arguments provide access to the following objects:
+
 - `model`
 :   Access to the sigleton `Model` which provides access to all
     the data repositories
@@ -12,9 +19,6 @@ following attributes:
 - `viewManager`
 :   Access to the sigleton `ViewManager`, this is used to switch to another View,
     as the ViewManager controls which view is shown to the user
-
-Each view must implement a single method: `void run`,
-this is executed at the start of the view by the ViewManager
 
 ### Creating a View
 
@@ -24,13 +28,9 @@ a view which displays information about a User.
 The default View boilerplate is this:
 
 ```java
-public class ExampleView extends View {
-    public ExampleView(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class ExampleView implements View {
     @Override
-    void run() {
+    void run(Model model, ViewManager viewManager) {
         System.out.println("Hello world!");
     }
 }
@@ -48,18 +48,17 @@ to provide the User. Another view in the program will provide the user
 when constructing the View
 
 ```java
-public class UserView extends View {
+public class UserView implements View {
     // We add the user as a property
     User myUser;
-    
+
     // And make it an argument in the constructor
-    public UserView(Model model, ViewManager viewManager, User user) {
-        super(model, viewManager);
+    public UserView(User user) {
         this.myUser = user;
     }
 
     @Override
-    void run() {
+    void run(Model model, ViewManager viewManager) {
         // We can now access the user
         System.out.println(myUser.getName());
     }
@@ -72,8 +71,8 @@ behind the scenes is this:
 ```java
 void main() {
     User someUser = getUser();
-    UserView userView = new UserView(model, viewManager, someUser);
-    userView.run();
+    UserView userView = new UserView(someUser);
+    userView.run(model, viewManager);
 }
 ```
 
@@ -83,13 +82,9 @@ Let's imagine that we want to switch to the UserView from another View.
 We'll first define this view:
 
 ```java
-public class FirstView extends View {
-    public FirstView(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class FirstView implements View {
     @Override
-    void run() {
+    void run(Model model, ViewManager viewManager) {
         System.out.println("Hello world!");
     }
 }
@@ -105,7 +100,7 @@ To change to the `UserView` we'll have to:
 @Override
 void run() {
     // Get the userRepository from Model
-    UserRepository users = this.model.users;
+    UserRepository users = model.users;
     
     // Get a user from the repository
     User someUser = users.findById(0);
@@ -117,7 +112,7 @@ ViewUser is just a class so we can initialize as any other class:
 ```java
 // in run()
 // Initialize the UserView using the user we got
-UserView myUserView = new UserView(this.model, this.viewManager, someUser);
+UserView myUserView = new UserView(someUser);
 ```
 
 `ViewManager` provides a method `switchView(View)` to switch to another view:
@@ -125,30 +120,26 @@ UserView myUserView = new UserView(this.model, this.viewManager, someUser);
 ```java
 // in run()
 // Switch the view to the one we just initialized
-this.viewManager.switchView(myUserView);
+viewManager.switchView(myUserView);
 ```
 
 Adding all together we'd have this:
 
 ```java
-public class FirstView extends View {
-    public FirstView(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class FirstView implements View {
     @Override
-    void run() {
+    void run(Model model, ViewManager viewManager) {
         // Get the userRepository from Model
-        UserRepository users = this.model.users;
+        UserRepository users = model.users;
 
         // Get a user from the repository
         User someUser = users.findById(0);
 
         // Initialize the UserView using the user we got
-        UserView myUserView = new UserView(this.model, this.viewManager, someUser);
+        UserView myUserView = new UserView(someUser);
 
         // Switch the view to the one we just initialized
-        this.viewManager.switchView(myUserView);
+        viewManager.switchView(myUserView);
     }
 }
 ```
@@ -170,13 +161,9 @@ to the views we made previously (`ExampleView` and `FirstView`)
 We start with the view boilerplate:
 
 ```java
-public class MenuView extends View {
-    public MenuView(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class MenuView implements View {
     @Override
-    void run() {
+    void run(Model model, ViewManager viewManager) {
         
     }
 }
@@ -199,13 +186,9 @@ The usage of `MenuHelper` is simple:
 We'll now implement it in our View:
 
 ```java
-public class MenuView extends View {
-    public MenuView(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class MenuView implements View {
     @Override
-    void run() {
+    void run(Model model, ViewManager viewManager) {
         // 1. Instantiate MenuHelper
         MenuHelper myMenuHelper = new MenuHelper();
         

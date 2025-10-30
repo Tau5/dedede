@@ -2,16 +2,14 @@ package dedede.view;
 
 import dedede.domain.User;
 
-public class ReturnBookView extends View {
-
+public class ReturnBookView implements View {
     private User user;
-    public ReturnBookView(Model model, ViewManager viewManager, User user) {
-        super(model, viewManager);
+    public ReturnBookView(User user) {
         this.user = user;
     }
 
     @Override
-    void run() {
+    public void run(Model model, ViewManager viewManager) {
         var books = model.books;
 
         //books.findAllList().

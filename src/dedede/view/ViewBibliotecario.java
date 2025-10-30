@@ -1,15 +1,11 @@
 package dedede.view;
 
-public class ViewBibliotecario extends View {
-    public ViewBibliotecario(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class ViewBibliotecario implements View {
     @Override
-    void run() {
+    public void run(Model model, ViewManager viewManager) {
         System.out.println("Modo bibliotecario");
         viewManager.switchView(
-                new ViewModo(this.model, this.viewManager)
+                new ViewModo()
         );
     }
 }

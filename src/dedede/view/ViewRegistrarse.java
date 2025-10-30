@@ -2,13 +2,9 @@ package dedede.view;
 
 import dedede.domain.User;
 
-public class ViewRegistrarse extends View {
-    public ViewRegistrarse(Model model, ViewManager viewManager) {
-        super(model, viewManager);
-    }
-
+public class ViewRegistrarse implements View {
     @Override
-    void run() {
+    public void run(Model model, ViewManager viewManager) {
         MenuHelper.sc.reset();
         System.out.print("nombre: ");
         MenuHelper.sc.nextLine();
@@ -20,12 +16,12 @@ public class ViewRegistrarse extends View {
             nombre, apellidos
         );
 
-        user = this.model.users.save(user);
+        user = model.users.save(user);
 
         System.out.println(user.getID());
 
         viewManager.switchView(
-            new HomeUsuario(model, viewManager, user)
+            new HomeUsuario(user)
         );
     }
 }
