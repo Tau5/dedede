@@ -16,8 +16,10 @@ public class BorrowedBooksView extends View {
         var books = model.books;
         books.findAllList().forEach((book) -> {
             if (book.getUserID() == user.getID()) {
-                System.out.println(book);
+                System.out.println();
             }
         });
+
+        viewManager.switchView(new HomeUsuario(model, viewManager, user));
     }
 }
