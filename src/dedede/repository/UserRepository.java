@@ -76,6 +76,15 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
 
     @Override
     public <S extends User> S save(S entity) {
+        long newId = 0;
+
+        if (findAllList().isEmpty()) {
+            newId = 0;
+        } else {
+            newId = findAllList().getLast().getID() + 1;
+        }
+
+        entity.setID(newId);
 
         CSVRow row = userToRow(entity);
         try {
