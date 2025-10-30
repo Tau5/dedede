@@ -47,6 +47,7 @@ public class MenuHelper {
     }
 
     public static int getNumber(String prompt) {
+        System.out.print(prompt + " ");
         int value = 0;
         if (sc.hasNextInt()) {
             value = sc.nextInt();
