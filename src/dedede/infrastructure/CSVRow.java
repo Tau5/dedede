@@ -85,9 +85,9 @@ public class  CSVRow {
 
     public void setBoolean(int fieldIndex, Boolean value) throws ArrayIndexOutOfBoundsException {
         if (value) {
-            setLong(fieldIndex, 0);
-        } else {
             setLong(fieldIndex, 1);
+        } else {
+            setLong(fieldIndex, 0);
         }
     }
 }
