@@ -53,7 +53,7 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
         boolean exist = false;
         var rows = table.listAll();
 
-       exist = rows.stream().filter(f -> f.getLong(0).equals(ID)).findFirst().isPresent();
+       exist = rows.stream().filter(f -> f.getLong(0).get().equals(ID)).findFirst().isPresent();
 
        return exist;
     }
@@ -61,7 +61,10 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
     @Override
     public User findById(Long id) {
         var rows = table.listAll();
-        var maybeUser = rows.stream().filter(f -> f.getLong(0).equals(id)).findFirst();
+        var maybeUser = rows.stream().filter(
+                f -> f.getLong(0).filter(
+                        l -> l.equals(id)).isPresent()
+        ).findFirst();
         var user = maybeUser.map(this::userFromRow).get();
         return user;
     }
@@ -75,13 +78,14 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
     public <S extends User> S save(S entity) {
 
         CSVRow row = userToRow(entity);
-
         try {
             if(existsById(entity.getID())) {
                 table.updateRow(CSVManager.convertToRaw(entity.getID()), 0, row);
             } else {
                 table.insertRow(row);
             }
+
+            table.saveFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -95,6 +99,6 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
 
     @Override
     public List<User> findAllList() {
-        return List.of();
+        return (List<User>) this.findAll();
     }
 }
