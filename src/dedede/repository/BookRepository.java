@@ -115,6 +115,16 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
 
     @Override
     public <S extends Book> S save(S entity) {
+        long newId = 0;
+
+        if (findAllList().isEmpty()) {
+            newId = 0;
+        } else {
+            newId = findAllList().getLast().getID() + 1;
+        }
+
+        entity.setID(newId);
+
         CSVRow row = bookToRow(entity);
         try {
             if (existsById(entity.getID())) {

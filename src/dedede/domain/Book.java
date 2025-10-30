@@ -22,6 +22,14 @@ public class Book {
         this.userID = userID;
     }
 
+    public Book(String title, String author, boolean borrowed, long userID, Instant borrowStart, Instant borrowEnd) {
+        this(null, title, author, borrowed, userID, borrowStart, borrowEnd);
+    }
+
+    public Book(String title, String author) {
+        this(title, author, false, 0, Instant.ofEpochSecond(0), Instant.ofEpochSecond(0));
+    }
+
     public Long getID() {
         return ID;
     }
