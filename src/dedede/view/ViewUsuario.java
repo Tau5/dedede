@@ -7,9 +7,13 @@ public class ViewUsuario extends View {
 
     @Override
     void run() {
-        System.out.println("Modo usuario");
-        viewManager.switchView(
-                new ViewModo(this.model, this.viewManager)
-        );
+        MenuHelper menu = new MenuHelper();
+
+        menu.registerOption(1, "Iniciar sesión", () -> new ViewIniciarSesion(model, viewManager));
+        menu.registerOption(2, "Registrarse", () -> new ViewRegistrarse(model, viewManager));
+
+        View view = menu.chooseAndExecute("opción: ");
+
+        viewManager.switchView(view);
     }
 }
