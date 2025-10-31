@@ -20,7 +20,7 @@ public class UserHomeView implements View {
         menu.registerOption(4, "Eliminar cuenta", () -> new DeleteUserView(user));
         menu.registerOption(5, "Salir", ViewModo::new);
 
-        View nextView = menu.chooseAndExecute("opcion: ");
+        View nextView = menu.chooseAndExecute("opcion:");
         viewManager.switchView(nextView);
     }
 }

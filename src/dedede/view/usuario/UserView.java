@@ -13,7 +13,7 @@ public class UserView implements View {
         menu.registerOption(1, "Iniciar sesión", ViewIniciarSesion::new);
         menu.registerOption(2, "Registrarse", ViewRegistrarse::new);
 
-        View view = menu.chooseAndExecute("opción: ");
+        View view = menu.chooseAndExecute("opción:");
 
         viewManager.switchView(view);
     }

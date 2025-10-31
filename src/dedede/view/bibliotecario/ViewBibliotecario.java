@@ -13,7 +13,7 @@ public class ViewBibliotecario implements View {
         menu.registerOption(2, "Eliminar libro", DeleteLibroView::new);
         menu.registerOption(3, "Salir", ViewModo::new);
 
-        View view = menu.chooseAndExecute("opcion: ");
+        View view = menu.chooseAndExecute("opcion:");
 
         viewManager.switchView(view);
     }

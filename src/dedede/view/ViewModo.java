@@ -11,7 +11,7 @@ public class ViewModo implements View {
         menu.registerOption(1, "Usuario", UserView::new);
         menu.registerOption(2, "Bibliotecario", ViewBibliotecario::new);
 
-        View nextView = menu.chooseAndExecute("opcion: ");
+        View nextView = menu.chooseAndExecute("opcion:");
 
         viewManager.switchView(nextView);
     }
