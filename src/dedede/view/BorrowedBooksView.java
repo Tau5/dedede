@@ -11,12 +11,12 @@ public class BorrowedBooksView implements View {
     @Override
     public void run(Model model, ViewManager viewManager) {
         var books = model.books;
-        books.findAllList().forEach((book) -> {
+        books.findAllList().forEach(book -> {
             if (book.getUserID() == user.getID()) {
                 System.out.println(book);
             }
         });
 
-        viewManager.switchView(new HomeUsuario(user));
+        viewManager.switchView(new UserHomeView(user));
     }
 }
