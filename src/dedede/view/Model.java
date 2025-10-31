@@ -7,8 +7,8 @@ import java.io.File;
 import java.io.IOException;
 
 final public class Model {
-    BookRepository books;
-    UserRepository users;
+    public BookRepository books;
+    public UserRepository users;
 
     Model(File booksFile, File usersFile) throws IOException {
         this.books = new BookRepository(booksFile);
