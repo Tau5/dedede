@@ -21,7 +21,7 @@ public class ViewRegistrarse implements View {
         System.out.println(user.getID());
 
         viewManager.switchView(
-            new HomeUsuario(user)
+            new UserHomeView(user)
         );
     }
 }
