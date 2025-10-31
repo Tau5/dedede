@@ -54,4 +54,13 @@ public class User {
     public void returnBook(Book book) {
         book.setBorrowed(false);
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "ID=" + ID +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
+    }
 }
