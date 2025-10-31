@@ -11,7 +11,14 @@ public class BorrowBooksView implements View{
     @Override
     public void run(Model model, ViewManager viewManager) {
         var books = model.books;
+        books.findAllList().forEach((book) -> {
+            if (!book.isBorrowed()) {
+                System.out.println("[" + book.getID() + "] " + book.getTitle() + " (" + book.getAuthor() + ")");
+            }
+        });
+
         var id = MenuHelper.getNumber("Ingrese el id del libro que quiere prestar");
+
         books.findAllList().forEach((book) -> {
             if (book.getID() == id) {
                 if (!book.isBorrowed()) {
