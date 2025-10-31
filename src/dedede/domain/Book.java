@@ -1,5 +1,6 @@
 package dedede.domain;
 
+import java.time.Duration;
 import java.time.Instant;
 
 public class Book {
@@ -84,6 +85,23 @@ public class Book {
 
     public void setBorrowStart(Instant borrowStart) {
         this.borrowStart = borrowStart;
+    }
+
+    public void borrow(User user) {
+        this.setBorrowed(true);
+        this.setUserID(this.ID);
+        this.setBorrowStart(Instant.now());
+        this.setBorrowEnd(
+                Instant
+                .now()
+                .plus(Duration.ofDays(15))
+        );
+    }
+
+    public void returnBook() {
+        this.setBorrowed(false);
+        this.setBorrowStart(null);
+        this.setBorrowEnd(null);
     }
 
     @Override
