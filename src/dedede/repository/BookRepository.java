@@ -4,7 +4,9 @@ import dedede.domain.Book;
 import dedede.infrastructure.CSVManager;
 import dedede.infrastructure.CSVRow;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
@@ -14,6 +16,13 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
     private final CSVManager table;
 
     public BookRepository(File file) throws IOException {
+       if (!file.exists()) {
+           file.getParentFile().mkdirs();
+           var writer = new BufferedWriter(new FileWriter(file));
+           writer.write("id,title,author,borrowed,userId,borrowStart,borrowEnd\n");
+           writer.flush();
+           writer.close();
+       }
        table = new CSVManager(file);
     }
 
