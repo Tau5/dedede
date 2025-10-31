@@ -25,7 +25,8 @@ public class ReturnBookView implements View {
         var id = MenuHelper.getNumber("Ingresa el id del libro que quieres devolver:");
         books.findAllList().forEach(book -> {
             if (book.getID() == id) {
-                user.returnBook(book);
+                book.returnBook();
+                model.books.save(book);
             }
         });
 

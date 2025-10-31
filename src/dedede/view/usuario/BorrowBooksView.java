@@ -25,7 +25,7 @@ public class BorrowBooksView implements View {
         books.findAllList().forEach((book) -> {
             if (book.getID() == id) {
                 if (!book.isBorrowed()) {
-                    user.borrowBook(book);
+                    book.borrow(user);
                     model.books.save(book);
                     System.out.println("Libro prestado.");
                 }

@@ -44,17 +44,6 @@ public class User {
         this.surname = surname;
     }
 
-    public void borrowBook(Book book) {
-        book.setBorrowed(true);
-        book.setUserID(this.ID);
-        book.setBorrowStart(Instant.now());
-        book.setBorrowEnd(Instant.now());
-    }
-
-    public void returnBook(Book book) {
-        book.setBorrowed(false);
-    }
-
     @Override
     public String toString() {
         return "User{" +
