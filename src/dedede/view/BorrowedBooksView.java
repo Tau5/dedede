@@ -13,7 +13,7 @@ public class BorrowedBooksView implements View {
         var books = model.books;
         books.findAllList().forEach((book) -> {
             if (book.getUserID() == user.getID()) {
-                System.out.println();
+                System.out.println(book);
             }
         });
 
