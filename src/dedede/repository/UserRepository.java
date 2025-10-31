@@ -17,6 +17,7 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
 
     public UserRepository(File file) throws IOException {
         if (!file.exists()) {
+            file.getParentFile().mkdirs();
             var writer = new BufferedWriter(new FileWriter(file));
             writer.write("id,name,surnames");
             writer.flush();

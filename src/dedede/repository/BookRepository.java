@@ -17,6 +17,7 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
 
     public BookRepository(File file) throws IOException {
        if (!file.exists()) {
+           file.getParentFile().mkdirs();
            var writer = new BufferedWriter(new FileWriter(file));
            writer.write("id,title,author,borrowed,userId,borrowStart,borrowEnd\n");
            writer.flush();
