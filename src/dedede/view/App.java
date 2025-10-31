@@ -9,7 +9,10 @@ public class App {
     public static void main(String[] args) {
         Model model;
         try {
-            model = new Model(new File("books.csv"), new File("users.csv"));
+            model = new Model(
+                new File("data/books.csv"),
+                new File("data/users.csv")
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
