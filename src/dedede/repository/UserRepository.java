@@ -4,7 +4,9 @@ import dedede.domain.User;
 import dedede.infrastructure.CSVManager;
 import dedede.infrastructure.CSVRow;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +16,12 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
     private CSVManager table;
 
     public UserRepository(File file) throws IOException {
+        if (!file.exists()) {
+            var writer = new BufferedWriter(new FileWriter(file));
+            writer.write("id,name,surnames");
+            writer.flush();
+            writer.close();
+        }
         this.table = new CSVManager(file);
     }
 
