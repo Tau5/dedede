@@ -1,9 +1,12 @@
-package dedede.view;
+package dedede.view.usuario;
 
 import dedede.domain.User;
-import dedede.view.usuario.UserHomeView;
+import dedede.view.MenuHelper;
+import dedede.view.Model;
+import dedede.view.View;
+import dedede.view.ViewManager;
 
-public class DeleteUserView implements View{
+public class DeleteUserView implements View {
 
     private User user;
 
