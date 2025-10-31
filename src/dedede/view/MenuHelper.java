@@ -28,12 +28,7 @@ public class MenuHelper {
 
         int chosen;
         do {
-            System.out.print(prompt);
-            chosen = -1;
-            if (sc.hasNextInt()) {
-                chosen = sc.nextInt();
-                sc.reset();
-            }
+            chosen = getNumber(prompt);
 
             if (options.containsKey(chosen)) {
                 break;
@@ -49,11 +44,17 @@ public class MenuHelper {
     public static int getNumber(String prompt) {
         System.out.print(prompt + " ");
         int value = 0;
-        if (sc.hasNextInt()) {
-            value = sc.nextInt();
-            sc.reset();
-        }
 
+        // Get line
+        String line = sc.nextLine();
+        // Remove all characters which are not digits
+        line = line.replaceAll("\\D", "");
+
+        try {
+            value = Integer.parseInt(line);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
         return value;
     }
 
