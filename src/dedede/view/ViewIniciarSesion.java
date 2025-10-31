@@ -21,7 +21,7 @@ public class ViewIniciarSesion implements View {
         System.out.println(usuario.getName());
 
         viewManager.switchView(
-            new HomeUsuario(usuario)
+            new UserHomeView(usuario)
         );
     }
 }
