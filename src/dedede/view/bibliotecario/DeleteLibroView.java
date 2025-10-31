@@ -1,6 +1,9 @@
 package dedede.view.bibliotecario;
 
-import dedede.view.*;
+import dedede.view.MenuHelper;
+import dedede.view.Model;
+import dedede.view.View;
+import dedede.view.ViewManager;
 
 public class DeleteLibroView implements View {
     @Override

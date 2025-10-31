@@ -1,7 +1,10 @@
 package dedede.view.bibliotecario;
 
 import dedede.domain.Book;
-import dedede.view.*;
+import dedede.view.MenuHelper;
+import dedede.view.Model;
+import dedede.view.View;
+import dedede.view.ViewManager;
 
 public class AddLibroView implements View {
     @Override
