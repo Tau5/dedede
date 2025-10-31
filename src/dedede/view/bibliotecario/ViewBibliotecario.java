@@ -11,7 +11,8 @@ public class ViewBibliotecario implements View {
 
         menu.registerOption(1, "Añadir libro", AddLibroView::new);
         menu.registerOption(2, "Eliminar libro", DeleteLibroView::new);
-        menu.registerOption(3, "Salir", ViewModo::new);
+        menu.registerOption(3, "Listar libros", ListBooksView::new);
+        menu.registerOption(4, "Salir", ViewModo::new);
 
         View view = menu.chooseAndExecute("opcion: ");
 
