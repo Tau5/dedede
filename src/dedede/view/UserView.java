@@ -1,6 +1,6 @@
 package dedede.view;
 
-public class ViewUsuario implements View {
+public class UserView implements View {
     @Override
     public void run(Model model, ViewManager viewManager) {
         MenuHelper menu = new MenuHelper();
