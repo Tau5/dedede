@@ -12,6 +12,17 @@ public class ReturnBookView implements View {
     public void run(Model model, ViewManager viewManager) {
         var books = model.books;
 
-        //books.findAllList().
+        System.out.println("Libros que puede devolver:");
+        books.findAllList().forEach(book -> {
+            if (book.isBorrowed()) {
+                System.out.println(book);
+            }
+        });
+        var id = MenuHelper.getNumber("Ingresa el id del libro que quieres devolver:");
+        books.findAllList().forEach(book -> {
+            if (book.getID() == id) {
+                user.returnBook(book);
+            }
+        });
     }
 }
