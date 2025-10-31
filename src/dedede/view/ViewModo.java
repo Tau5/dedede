@@ -1,5 +1,7 @@
 package dedede.view;
 
+import dedede.view.bibliotecario.ViewBibliotecario;
+
 public class ViewModo implements View {
     @Override
     public void run(Model model, ViewManager viewManager) {
