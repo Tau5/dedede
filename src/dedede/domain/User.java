@@ -48,10 +48,10 @@ public class User {
         book.setBorrowed(true);
         book.setUserID(this.ID);
         book.setBorrowStart(Instant.now());
+        book.setBorrowEnd(Instant.now());
     }
 
-    public void returnBook(Book book, Instant endDate) {
+    public void returnBook(Book book) {
         book.setBorrowed(false);
-        book.setBorrowEnd(endDate);
     }
 }
