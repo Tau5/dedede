@@ -11,6 +11,12 @@ public class BorrowBooksView implements View{
     @Override
     public void run(Model model, ViewManager viewManager) {
         var books = model.books;
+        System.out.println("Lista de libros que no estan prestados");
+        books.findAllList().forEach(book -> {
+            if (!book.isBorrowed()) {
+                System.out.println(book);
+            }
+        });
         var id = MenuHelper.getNumber("Ingrese el id del libro que quiere prestar");
         books.findAllList().forEach((book) -> {
             if (book.getID() == id) {
@@ -18,12 +24,10 @@ public class BorrowBooksView implements View{
                     user.borrowBook(book);
                     model.books.save(book);
                     System.out.println("Libro prestado.");
-                } else {
-                    System.out.println("No se puede prestar el libro, ya esta prestado");
                 }
             }
         });
 
-        viewManager.switchView(new HomeUsuario(user));
+        viewManager.switchView(new UserHomeView(user));
     }
 }
