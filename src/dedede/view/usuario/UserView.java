@@ -10,8 +10,8 @@ public class UserView implements View {
     public void run(Model model, ViewManager viewManager) {
         MenuHelper menu = new MenuHelper();
 
-        menu.registerOption(1, "Iniciar sesión", () -> new ViewIniciarSesion());
-        menu.registerOption(2, "Registrarse", () -> new ViewRegistrarse());
+        menu.registerOption(1, "Iniciar sesión", ViewIniciarSesion::new);
+        menu.registerOption(2, "Registrarse", ViewRegistrarse::new);
 
         View view = menu.chooseAndExecute("opción: ");
 
