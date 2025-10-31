@@ -1,6 +1,7 @@
-package dedede.view;
+package dedede.view.usuario;
 
 import dedede.domain.User;
+import dedede.view.*;
 
 public class UserHomeView implements View {
     private User user;

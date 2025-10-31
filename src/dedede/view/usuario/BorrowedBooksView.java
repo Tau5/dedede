@@ -1,6 +1,9 @@
-package dedede.view;
+package dedede.view.usuario;
 
 import dedede.domain.User;
+import dedede.view.Model;
+import dedede.view.View;
+import dedede.view.ViewManager;
 
 public class BorrowedBooksView implements View {
     private User user;

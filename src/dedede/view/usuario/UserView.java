@@ -1,4 +1,9 @@
-package dedede.view;
+package dedede.view.usuario;
+
+import dedede.view.MenuHelper;
+import dedede.view.Model;
+import dedede.view.View;
+import dedede.view.ViewManager;
 
 public class UserView implements View {
     @Override

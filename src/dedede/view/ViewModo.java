@@ -1,6 +1,7 @@
 package dedede.view;
 
 import dedede.view.bibliotecario.ViewBibliotecario;
+import dedede.view.usuario.UserView;
 
 public class ViewModo implements View {
     @Override
