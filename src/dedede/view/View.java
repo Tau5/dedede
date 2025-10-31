@@ -1,5 +1,5 @@
 package dedede.view;
 
-interface View {
+public interface View {
     void run(Model model, ViewManager viewManager);
 }

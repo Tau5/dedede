@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public class MenuHelper {
     private record Option(String name, Supplier<View> supplier) {}
-    static Scanner sc = new Scanner(System.in);
+    public static Scanner sc = new Scanner(System.in);
 
     Map<Integer, Option> options;
 
