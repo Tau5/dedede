@@ -28,5 +28,7 @@ public class ReturnBookView implements View {
                 user.returnBook(book);
             }
         });
+
+        viewManager.switchView(new UserHomeView(user));
     }
 }
