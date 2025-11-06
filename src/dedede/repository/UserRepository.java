@@ -26,11 +26,11 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
         this.table = new CSVManager(file);
     }
 
-    private User userFromRow(CSVRow row) {
+    private User userFromRow(CSVRow row) throws InvalidRowException {
         return new User(
-                row.getLong(0).orElse(0L),
-                row.getString(1).orElse(""),
-                row.getString(2).orElse("")
+                row.getLong(0).orElseThrow(() -> new InvalidRowException("Couldn't parsing column 0 to id")),
+                row.getString(1).orElseThrow(() -> new InvalidRowException("Couldn't parsing column 1 to name")),
+                row.getString(2).orElseThrow(() -> new InvalidRowException("Couldn't parsing column 2 to surname"))
         );
     }
 
@@ -74,13 +74,25 @@ public class UserRepository implements IRepositorioExtend<User, Long> {
                 f -> f.getLong(0).filter(
                         l -> l.equals(id)).isPresent()
         ).findFirst();
-        var user = maybeUser.map(this::userFromRow).get();
+        var user = maybeUser.map(row -> {
+            try {
+                return userFromRow(row);
+            } catch (InvalidRowException e) {
+                throw new RuntimeException(e);
+            }
+        }).get();
         return user;
     }
 
     @Override
     public Iterable<User> findAll() {
-        return table.listAll().stream().map(this::userFromRow).toList();
+        return table.listAll().stream().map(row -> {
+            try {
+                return userFromRow(row);
+            } catch (InvalidRowException e) {
+                throw new RuntimeException(e);
+            }
+        }).toList();
     }
 
     @Override
