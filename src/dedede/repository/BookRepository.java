@@ -8,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,25 +15,25 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
     private final CSVManager table;
 
     public BookRepository(File file) throws IOException {
-       if (!file.exists()) {
-           file.getParentFile().mkdirs();
-           var writer = new BufferedWriter(new FileWriter(file));
-           writer.write("id,title,author,borrowed,userId,borrowStart,borrowEnd\n");
-           writer.flush();
-           writer.close();
-       }
-       table = new CSVManager(file);
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            var writer = new BufferedWriter(new FileWriter(file));
+            writer.write("id,title,author,borrowed,userId,borrowStart,borrowEnd\n");
+            writer.flush();
+            writer.close();
+        }
+        table = new CSVManager(file);
     }
 
-    private Book bookFromRow(CSVRow row) {
+    private Book bookFromRow(CSVRow row) throws InvalidRowException {
         return new Book(
-                row.getLong(0).orElse(0L),
-                row.getString(1).orElse(""),
-                row.getString(2).orElse(""),
-                row.getBoolean(3).orElse(false),
-                row.getLong(4).orElse(0L),
-                row.getInstant(5).orElse(Instant.EPOCH),
-                row.getInstant(6).orElse(Instant.EPOCH)
+                row.getLong(0).orElseThrow(() -> new InvalidRowException("Error parsing long in column " + 0)),
+                row.getString(1).orElseThrow(() -> new InvalidRowException("Error parsing column " + 1 + " as string")),
+                row.getString(2).orElseThrow(() -> new InvalidRowException("Error parsing column " + 2 + " as string")),
+                row.getBoolean(3).orElseThrow(() -> new InvalidRowException("Error parsing column " + 3 + " as boolean")),
+                row.getLong(4).orElseThrow(() -> new InvalidRowException("Error parsing column " + 4 + " as Long")),
+                row.getInstant(5).orElseThrow(() -> new InvalidRowException("Error parsing column " + 5 + " as Instant")),
+                row.getInstant(6).orElseThrow(() -> new InvalidRowException("Error parsing column " + 6 + " as Instant"))
         );
     }
 
@@ -72,12 +71,12 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
     @Override
     public Book findById(Long id) {
         var rows = table.listAll().stream().filter(t ->
-            t.getLong(0).stream().anyMatch(rowId -> rowId.equals(id))
+                t.getLong(0).stream().anyMatch(rowId -> rowId.equals(id))
         );
 
         var maybeRow = rows.findAny();
 
-        return maybeRow.map(this::bookFromRow).orElse(null);
+        return maybeRow.map(this::bookFromRowHandled).orElse(null);
     }
 
     @Override
@@ -88,7 +87,15 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
 
         var maybeRow = rows.findAny();
 
-        return maybeRow.map(this::bookFromRow);
+        return maybeRow.map(this::bookFromRowHandled);
+    }
+
+    Book bookFromRowHandled(CSVRow row) {
+        try {
+            return bookFromRow(row);
+        } catch (InvalidRowException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -96,7 +103,7 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
         // Maps every CSVRow of the table to Book
         return table
                 .listAll()
-                .stream().map(this::bookFromRow)
+                .stream().map(this::bookFromRowHandled)
                 .toList();
     }
 
@@ -105,7 +112,7 @@ public class BookRepository implements IRepositorioExtend<Book, Long> {
         // Maps every CSVRow of the table to Book
         return table
                 .listAll()
-                .stream().map(this::bookFromRow)
+                .stream().map(this::bookFromRowHandled)
                 .toList();
     }
 
