@@ -87,15 +87,20 @@ public class Book {
         this.borrowStart = borrowStart;
     }
 
-    public void borrow(User user) {
-        this.setBorrowed(true);
-        this.setUserID(this.ID);
-        this.setBorrowStart(Instant.now());
-        this.setBorrowEnd(
-                Instant
-                .now()
-                .plus(Duration.ofDays(15))
-        );
+    public void borrow(User user) throws Exception {
+        if (!this.isBorrowed()) {
+            this.setBorrowed(true);
+            this.setUserID(this.ID);
+            this.setBorrowStart(Instant.now());
+            this.setBorrowEnd(
+                    Instant
+                            .now()
+                            .plus(Duration.ofDays(15))
+            );
+        } else {
+            throw new Exception("Este libro ya está en préstamo");
+        }
+
     }
 
     public void returnBook() {

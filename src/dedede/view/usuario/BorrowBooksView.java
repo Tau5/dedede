@@ -23,12 +23,16 @@ public class BorrowBooksView implements View {
         });
         var id = MenuHelper.getNumber("Ingrese el id del libro que quiere prestar");
         books.findAllList().forEach((book) -> {
-            if (book.getID() == id) {
-                if (!book.isBorrowed()) {
-                    book.borrow(user);
-                    model.books.save(book);
-                    System.out.println("Libro prestado.");
+            try {
+                if (book.getID() == id) {
+                    if (!book.isBorrowed()) {
+                        book.borrow(user);
+                        model.books.save(book);
+                        System.out.println("Libro prestado.");
+                    }
                 }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         });
 
