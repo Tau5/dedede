@@ -90,7 +90,7 @@ public class Book {
     public void borrow(User user) throws Exception {
         if (!this.isBorrowed()) {
             this.setBorrowed(true);
-            this.setUserID(this.ID);
+            this.setUserID(user.getID());
             this.setBorrowStart(Instant.now());
             this.setBorrowEnd(
                     Instant
