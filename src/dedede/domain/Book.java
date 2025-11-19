@@ -103,10 +103,16 @@ public class Book {
 
     }
 
-    public void returnBook() {
-        this.setBorrowed(false);
-        this.setBorrowStart(null);
-        this.setBorrowEnd(null);
+    public void returnBook(User user) throws Exception {
+        if (!this.isBorrowed()) {
+            throw new Exception("El libro no está en prestamo");
+        } else if (this.getUserID() != user.getID()) {
+            throw new Exception("Este libro está en préstamo por otro usuario");
+        } else {
+            this.setBorrowed(false);
+            this.setBorrowStart(null);
+            this.setBorrowEnd(null);
+        }
     }
 
     @Override
