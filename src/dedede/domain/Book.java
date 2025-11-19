@@ -98,7 +98,7 @@ public class Book {
                             .plus(Duration.ofDays(15))
             );
         } else {
-            throw new Exception("Este libro ya está en préstamo");
+            throw new Exception("El libro ya está en prestamo");
         }
 
     }
