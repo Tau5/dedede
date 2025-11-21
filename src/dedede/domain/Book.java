@@ -76,7 +76,11 @@ public class Book {
     }
 
     public void setBorrowEnd(Instant borrowEnd) {
-        this.borrowEnd = borrowEnd;
+        if (borrowEnd == null) {
+            this.borrowEnd = Instant.MIN;
+        } else {
+            this.borrowEnd = borrowEnd;
+        }
     }
 
     public Instant getBorrowStart() {
@@ -84,7 +88,11 @@ public class Book {
     }
 
     public void setBorrowStart(Instant borrowStart) {
-        this.borrowStart = borrowStart;
+        if (borrowStart == null) {
+            this.borrowStart = Instant.MIN;
+        } else {
+            this.borrowStart = borrowStart;
+        }
     }
 
     public void borrow(User user) throws Exception {
