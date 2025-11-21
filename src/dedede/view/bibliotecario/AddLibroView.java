@@ -10,9 +10,7 @@ public class AddLibroView implements View {
     @Override
     public void run(Model model, ViewManager viewManager) {
         System.out.print("Título: ");
-        MenuHelper.sc.nextLine();
         String title = MenuHelper.sc.nextLine();
-        MenuHelper.sc.reset();
         System.out.print("Autor: ");
         String author = MenuHelper.sc.nextLine();
 
