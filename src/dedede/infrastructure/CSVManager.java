@@ -28,16 +28,38 @@ public class CSVManager {
     }
 
     /**
+     * Lee la base de datos y actualiza la lista en memoria
+     * con esos datos
+     *
+     * @throws IOException
+     */
+    private void updateRows() throws IOException {
+        try (var reader = new BufferedReader(new FileReader(file))) {
+            var lines = reader
+                    .lines()
+                    .map(CSVRow::FromLine);
+            this.rows = new ArrayList<>(lines.toList());
+            this.header = this.rows.removeFirst();
+        }
+    }
+
+    /**
      * Metodo para devolver la lista de las filas del archivo
      *
      * @return this.rows
      */
     public List<CSVRow> listAll() {
+        try {
+            updateRows();
+        } catch (IOException ignored) {}
+
         return this.rows;
     }
 
     /**
      * Metodo para escribir de memoria a archivo
+     * Debería lanzarse inmediatamente después de hacer un cambio
+     * ya que sobreescribe la base de datos con los datos en memoria
      *
      * @throws IOException
      */
@@ -65,6 +87,7 @@ public class CSVManager {
      * @throws IOException
      */
     public void updateRow(String ID, int column, CSVRow csvRow) throws IOException {
+        updateRows();
         for (int i = 0; i < rows.size(); i++) {
             var row = rows.get(i);
             if (row.fields.get(column).equals(ID)) {
@@ -88,6 +111,10 @@ public class CSVManager {
      * @param ID Identificador de la fila
      */
     public void deleteRow(String ID, int column) {
+        try {
+            updateRows();
+        } catch (IOException ignored) {}
+
         rows.removeIf(r -> r.fields.get(column).equals(ID));
     }
 
