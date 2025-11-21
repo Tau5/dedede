@@ -1,14 +1,19 @@
 package dedede.view.usuario;
 
 import dedede.domain.User;
-import dedede.view.MenuHelper;
-import dedede.view.Model;
-import dedede.view.View;
-import dedede.view.ViewManager;
+import dedede.view.*;
 
 public class ViewIniciarSesion implements View {
     @Override
     public void run(Model model, ViewManager viewManager) {
+        if (model.users.count() < 1) {
+            System.out.println("No hay usuarios, regístrate y vuelve a intentarlo");
+            viewManager.switchView(
+                new UserView()
+            );
+            return;
+        }
+
         model.users.findAllList().forEach(user -> {
             System.out.println(
                     user.getID() + ": " + user.getName() + " " + user.getSurname()
